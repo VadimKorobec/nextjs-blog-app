@@ -2,11 +2,11 @@ import Link from "next/link";
 
 import Logo from "../Logo/logo";
 
-import styles from './mainNavigation.module.css'
+import styles from "./mainNavigation.module.css";
 
 const MainNavigation = () => {
   return (
-    <header>
+    <header className={styles.header}>
       <Link href="/">
         <Logo />
       </Link>

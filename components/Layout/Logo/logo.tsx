@@ -1,7 +1,7 @@
-import styles from './logo.module.css'
+import styles from "./logo.module.css";
 
 const Logo = () => {
-    return <div>Logo</div>
-}
+  return <div className={styles.logo}>Cat' Next Blog</div>;
+};
 
 export default Logo;
