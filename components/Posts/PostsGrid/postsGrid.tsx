@@ -12,7 +12,7 @@ const PostsGrid = ({ posts }: PostGridProps) => {
     <ul className={styles.grid}>
       {posts.map((post) => (
         <li key={post.id}>
-          <PostItem />
+          <PostItem post={post} />
         </li>
       ))}
     </ul>
