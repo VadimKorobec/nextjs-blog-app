@@ -1,15 +1,20 @@
-import Image from 'next/image';
+import Image from "next/image";
 
-import styles from './hero.module.css'
+import Cat from "../../../public/images/site/cat.webp";
+
+import styles from "./hero.module.css";
 
 const Hero = () => {
   return (
     <section className={styles.hero}>
-          <div className={styles.image}>
-              <Image src={} alt='An image showing Cat' width={} height={}/>
-          </div>
-          <h1>Hi, I'm a Cat</h1>
-          <p>I blog about web development - especially frontend frameworks like Angular or React</p>
+      <div className={styles.image}>
+        <Image src={Cat} alt="An image showing Cat" width={200} height={200} />
+      </div>
+      <h1>Hi, I'm a Cat</h1>
+      <p>
+        I blog about web development - especially frontend frameworks like
+        Angular or React
+      </p>
     </section>
   );
 };
