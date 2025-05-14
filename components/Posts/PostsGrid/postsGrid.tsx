@@ -11,7 +11,7 @@ const PostsGrid = ({ posts }: PostGridProps) => {
   return (
     <ul className={styles.grid}>
       {posts.map((post) => (
-        <li key={post.id}>
+        <li key={post.slug}>
           <PostItem post={post} />
         </li>
       ))}

@@ -8,7 +8,13 @@ const Hero = () => {
   return (
     <section className={styles.hero}>
       <div className={styles.image}>
-        <Image src={Cat} alt="An image showing Cat" width={200} height={200} />
+        <Image
+          src={Cat}
+          alt="An image showing Cat"
+          width={200}
+          height={200}
+          priority={true}
+        />
       </div>
       <h1>Hi, I'm a Cat</h1>
       <p>
