@@ -1,38 +1,24 @@
 import AllPosts from "@/components/Posts/AllPosts/allPosts";
+import { getFuteredPosts } from "@/lib/postsUtil";
+import { Post } from "@/types/post";
+import { GetStaticProps } from "next";
 
-const DUMMY_POSTS = [
-  {
-    slug: "getting-started-with-nextjs",
-    title: "Getting Started with NextJS",
-    image: "getting-started-nextjs.png",
-    description: "NextJS is a the React framework",
-    date: "2025-05-14",
-  },
-  {
-    slug: "getting-started-with-nextjs1",
-    title: "Getting Started with NextJS",
-    image: "getting-started-nextjs.png",
-    description: "NextJS is a the React framework",
-    date: "2025-05-14",
-  },
-  {
-    slug: "getting-started-with-nextjs2",
-    title: "Getting Started with NextJS",
-    image: "getting-started-nextjs.png",
-    description: "NextJS is a the React framework",
-    date: "2025-05-14",
-  },
-  {
-    slug: "getting-started-with-nextjs3",
-    title: "Getting Started with NextJS",
-    image: "getting-started-nextjs.png",
-    description: "NextJS is a the React framework",
-    date: "2025-05-14",
-  },
-];
+interface AllPostsPageProps{
+  posts:Post[]
+}
 
-const AllPostsPage = () => {
-  return <AllPosts posts={DUMMY_POSTS} />;
+const AllPostsPage = ({posts}:AllPostsPageProps) => {
+  return <AllPosts posts={posts} />;
+};
+
+export const getStaticProps: GetStaticProps = () => {
+  const allPosts = getFuteredPosts();
+
+  return {
+    props: {
+      posts: allPosts,
+    },
+  };
 };
 
 export default AllPostsPage;
