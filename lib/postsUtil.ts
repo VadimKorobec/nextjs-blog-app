@@ -13,6 +13,9 @@ interface PostMeta {
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
+export const getPostsFiles = () => {
+  return fs.readdirSync(postsDirectory);
+}
 
 export const getPostData = (fileName: string) => {
   const postSlug = fileName.replace(/\.md$/, "");
@@ -31,7 +34,7 @@ export const getPostData = (fileName: string) => {
 };
 
 export const getAllPosts = () => {
-  const postFiles = fs.readdirSync(postsDirectory);
+  const postFiles = getPostsFiles()
 
   const allPosts = postFiles.map((postFile) => getPostData(postFile));
 
