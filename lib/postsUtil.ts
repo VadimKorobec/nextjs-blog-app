@@ -17,6 +17,8 @@ export const getPostsFiles = () => {
   return fs.readdirSync(postsDirectory);
 }
 
+
+
 export const getPostData = (fileName: string) => {
   const postSlug = fileName.replace(/\.md$/, "");
   const filePath = path.join(postsDirectory, `${postSlug}.md`);
