@@ -1,7 +1,11 @@
-import { Message } from "@/types/message";
+import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = (
+import { Message } from "@/types/message";
+
+const uri = process.env.MONGODB_URI;
+
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<{ message: string }>
 ) => {
@@ -22,11 +26,41 @@ const handler = (
       return;
     }
 
+    if (!uri) {
+      return res
+        .status(500)
+        .json({ message: "Database connection string not found." });
+    }
+
     const newMessage: Message = {
       name,
       email,
       message,
     };
+
+    let client;
+
+    try {
+      client = await MongoClient.connect(uri);
+    } catch (error) {
+      res.status(500).json({
+        message: "Could not connect to database.",
+      });
+      return;
+    }
+
+    const db = client.db();
+
+    try {
+      const result = await db.collection("messages").insertOne(newMessage);
+      newMessage.id = result.insertedId.toString();
+    } catch (error) {
+      client.close();
+      res.status(500).json({ message: "Storing message failed." });
+      return;
+    }
+
+    client.close()
 
     res.status(201).json({
       message: "Success",
