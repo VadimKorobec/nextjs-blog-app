@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
 import { Message } from "@/types/message";
+import Notification from "../Ui/notification";
 
 const sendContactData = async (contactDetails: Message) => {
   const response = await fetch("/api/contact", {
@@ -25,7 +26,18 @@ const ContactForm = () => {
   const [requestStatus, setRequestStatus] = useState<
     "pending" | "success" | "rejected" | null
   >(null);
-  const [error, setError] = useState<null | string >(null);
+  const [error, setError] = useState<null | string>(null);
+
+  useEffect(() => {
+    if (requestStatus === "success" || requestStatus === "rejected") {
+      const timer = setTimeout(() => {
+        setRequestStatus(null);
+        setError(null);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [requestStatus]);
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     const email = event.target.value;
@@ -56,16 +68,17 @@ const ContactForm = () => {
         message: enteredMessage,
       });
       setRequestStatus("success");
+      reset();
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
         setError("Something went wrong");
-      } 
+      }
       setRequestStatus("rejected");
     }
 
-    reset();
+    
   };
 
   const reset = () => {
@@ -96,7 +109,7 @@ const ContactForm = () => {
     notification = {
       status: "rejected",
       title: "Success!",
-      message: "Message send successfully!",
+      message: error,
     };
   }
 
@@ -139,6 +152,13 @@ const ContactForm = () => {
           <button type="submit">Send Message</button>
         </div>
       </form>
+      {notification && (
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />
+      )}
     </section>
   );
 };

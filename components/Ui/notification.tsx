@@ -2,7 +2,7 @@ import styles from "./notification.module.css";
 
 interface NotificationProps {
   title: string;
-  message: string;
+  message: string | null;
   status: string;
 }
 
